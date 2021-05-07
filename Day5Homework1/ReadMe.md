@@ -1,3 +1,5 @@
+
+KONSOL ÇIKTISI
 ~~~~~
 
 Operation 0
