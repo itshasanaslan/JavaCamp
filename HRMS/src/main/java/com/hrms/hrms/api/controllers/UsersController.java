@@ -37,6 +37,11 @@ public class UsersController {
 		return this.userService.add(user);
 	}
 	
+	@PostMapping("/find_email")
+	User findEmail(@RequestBody String eMail) {
+		return this.userService.findByeMail(eMail);
+	}
+	
 	
 	
 	

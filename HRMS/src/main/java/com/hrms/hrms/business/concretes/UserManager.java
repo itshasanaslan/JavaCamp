@@ -70,15 +70,16 @@ public class UserManager implements UserService{
 	
 
 
+
+
+
 	@Override
-	public User getUser(String email) {
-		
-		for (User user: this.userDao.findAll()) {
-			if (user.geteMail().equals(email)) return user;
-		}
-		return null;
+	public User findByeMail(String eMail) {
+		return this.userDao.findByeMail(eMail);
 	}
 
+
+	
 
 	
 

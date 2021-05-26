@@ -71,12 +71,7 @@ public class ActivationCodeManager implements ActivationCodeService {
 
 	@Override
 	public ActivationCode findByUserId(int user_id) {
-		
-		for (ActivationCode code : this.activationCodeDao.findAll()) {
-			if (code.getUser_id() == user_id) return code;
-		}
-		System.out.println("Kod bulunamadı.");
-		return null;
+		return this.activationCodeDao.findByuserId(user_id);
 	}
 
 
@@ -88,37 +83,31 @@ public class ActivationCodeManager implements ActivationCodeService {
 	
 	@Override
 	public Result validateCode(CodeValidation codeValidation, UserService userService) {
-		//QUERY İLE ÇEKEMEDİĞİM İÇİN SİMDİLİK LİSTE OLARAK ALDIM.
-		ActivationCode activationCode = new ActivationCode();
-		User user = userService.getUser(codeValidation.getEmail());
+		User user = userService.findByeMail(codeValidation.getEmail());
+
 		if (user == null) return new ErrorResult("Kullanıcı bulunamadı");
+		ActivationCode code = this.findByUserId(user.getId());
+		if (code == null) return new ErrorResult("Doğrulama kodu bulunamadı.");
+				
 		
-		
-		for (ActivationCode code: this.getAllList()) {
-			if (code.getUser_id() == user.getId()) {
-				if (code.getCode().equals(codeValidation.getCode())) {
-					System.out.println("Doğrulama kodu eşleşti.");
-					code.setValidated(true);
-					activationCode = code;
-					break;
-				}
-				else {
-					return new ErrorResult("Doğrulama kodu hatalı.");
-				}
-			}
-		}
-		
-		if (activationCode.isValidated()) {
-			
+	
+		if (code.getCode().equals(codeValidation.getCode())) {
+			//System.out.println("Doğrulama kodu eşleşti.");
+			code.setValidated(true);
 			try {
-				this.activationCodeDao.save(activationCode);
+				this.activationCodeDao.save(code);
 				return new SuccessResult("Başarıyla doğrulandı");
 			}
 			catch (Exception e) {
 				return new ErrorResult(e.getMessage());
 			}
-	}
-	return new ErrorResult("Bir hata oluştu.");
-
+		
+		}
+		else {
+			return new ErrorResult("Doğrulama kodu hatalı.");
+		}
+	
+		
+	
 }
 }
