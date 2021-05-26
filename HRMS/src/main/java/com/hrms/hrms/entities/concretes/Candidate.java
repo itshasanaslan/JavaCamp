@@ -1,5 +1,7 @@
 package com.hrms.hrms.entities.concretes;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +16,10 @@ public class Candidate {
 	@Column(name = "id")
 	private int id;
 	
+	
+	@Column(name = "user_id")
+	private int user_id;
+	
 	@Column(name = "first_name")
 	private String firstName;
 	
@@ -24,18 +30,26 @@ public class Candidate {
 	private String nationalityNumber;
 	
 	@Column(name = "date_of_birth")
-	private String dateOfBirth;
+	private Date dateOfBirth;
 	
-	public Candidate() {}
+	
+	
+	public Candidate() {
+		super();
+	}
 
-	public Candidate(int id, String firstName, String lastName, String nationalityNumber, String dateOfBirth) {
+	public Candidate(int id, int user_id, String firstName, String lastName, String nationalityNumber, Date dateOfBirth) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.nationalityNumber = nationalityNumber;
 		this.dateOfBirth = dateOfBirth;
+		this.user_id = user_id;
+		
 	}
+	
+	
 
 	public int getId() {
 		return id;
@@ -69,13 +83,26 @@ public class Candidate {
 		this.nationalityNumber = nationalityNumber;
 	}
 
-	public String getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(String dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
+
+	public int getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+
+	
+	
+		
+	
 
 	
 }

@@ -2,9 +2,13 @@ package com.hrms.hrms.business.abstracts;
 
 import java.util.List;
 
+import com.hrms.hrms.core.utilities.DataResult;
+import com.hrms.hrms.core.utilities.Result;
 import com.hrms.hrms.entities.concretes.JobTitle;
 
 public interface JobTitleService {
 
-	List<JobTitle> getAll();
+	DataResult<List<JobTitle>> getAll();
+	Result add(JobTitle jobTitle);
+	
 }

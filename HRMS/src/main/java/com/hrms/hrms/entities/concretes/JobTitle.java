@@ -18,7 +18,9 @@ public class JobTitle {
 	@Column(name = "title")
 	private String title;
 		
-	public JobTitle() {}
+	public JobTitle() {
+		super();
+	}
 
 	public JobTitle(int id, String title) {
 		super();
