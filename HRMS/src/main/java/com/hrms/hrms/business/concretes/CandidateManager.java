@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.hrms.hrms.business.abstracts.ActivationCodeService;
 import com.hrms.hrms.business.abstracts.CandidateService;
+import com.hrms.hrms.business.abstracts.MernisService;
 import com.hrms.hrms.core.utilities.DataResult;
 import com.hrms.hrms.core.utilities.ErrorDataResult;
 import com.hrms.hrms.core.utilities.ErrorResult;
@@ -23,16 +24,17 @@ import com.hrms.hrms.entities.concretes.Candidate;
 public class CandidateManager implements CandidateService{
 	private CandidateDao candidateDao;
 	private ActivationCodeService activationCodeService;
-	
+	private MernisService mernisService;
 	
 	public CandidateManager() {}
 	
 	
 	@Autowired
-	public CandidateManager(CandidateDao candidateDao, ActivationCodeService activationCodeService) {
+	public CandidateManager(CandidateDao candidateDao, ActivationCodeService activationCodeService, MernisService mernisService) {
 		super();
 		this.candidateDao = candidateDao;
 		this.activationCodeService = activationCodeService;
+		this.mernisService = mernisService;
 	}
 
 
@@ -74,6 +76,10 @@ public class CandidateManager implements CandidateService{
 			return new ErrorResult("Kullanıcı bulunamadı");
 		}
 		
+		
+		if (!this.mernisService.validate(candidate)) {
+			return new ErrorResult("Verilen bilgiler Mernis tarafından doğrulanamadı.");
+		}
 		
 		if (!activationCode.isValidated()) {
 			error = true;
